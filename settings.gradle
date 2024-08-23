@@ -1,0 +1,3 @@
+rootProject.name = 'accounting_system'
+include 'user_service'
+include 'streaming_service'
