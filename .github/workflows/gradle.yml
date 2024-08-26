@@ -35,12 +35,15 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      # 5. 테스트가 성공적으로 완료되면 Docker 이미지를 빌드하고 푸시. (main 브랜치에서만 실행)
+      # 5. Docker 이미지 빌드 및 푸시 (main 브랜치에서만 실행)
+      - name: Log in to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/main'
         run: |
           docker build -t your-dockerhub-username/user_service:latest ./user_service
           docker build -t your-dockerhub-username/streaming_service:latest ./streaming_service
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker push your-dockerhub-username/user_service:latest
           docker push your-dockerhub-username/streaming_service:latest
