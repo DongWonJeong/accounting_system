@@ -16,7 +16,7 @@ jobs:
       contents: read
 
     steps:
-      # 1. 소스 코드를 체크아웃합니다.
+      # 1. 소스 코드를 체크아웃.
       - name: Check out code
         uses: actions/checkout@v2
 
@@ -27,11 +27,15 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # 3. Gradle을 사용하여 빌드 및 테스트 실행
+      # 3. gradlew에 실행 권한 부여
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      # 4. Gradle을 사용하여 빌드 및 테스트 실행
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      # 4. 테스트가 성공적으로 완료되면 Docker 이미지를 빌드하고 푸시합니다. (main 브랜치에서만 실행)
+      # 5. 테스트가 성공적으로 완료되면 Docker 이미지를 빌드하고 푸시. (main 브랜치에서만 실행)
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/main'
         run: |
