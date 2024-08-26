@@ -46,7 +46,7 @@ jobs:
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/main'
         run: |
-          docker build -t your-dockerhub-username/user_service:latest ./user_service
-          docker build -t your-dockerhub-username/streaming_service:latest ./streaming_service
-          docker push your-dockerhub-username/user_service:latest
-          docker push your-dockerhub-username/streaming_service:latest
+          docker build -t dongwonjeong/user_service:latest ./user_service
+          docker build -t dongwonjeong/streaming_service:latest ./streaming_service
+          docker push dongwonjeong/user_service:latest
+          docker push dongwonjeong/streaming_service:latest
