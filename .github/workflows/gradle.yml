@@ -34,13 +34,14 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      # 5. Docker 이미지 빌드 및 푸시 (main 브랜치에서만 실행)
+      # 5. Docker 로그인 및 이미지 빌드 및 푸시 (main 브랜치에서만 실행)
       - name: Log in to Docker Hub
         if: github.ref == 'refs/heads/main'
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+        run: |
+          echo "${{ env.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ env.DOCKER_HUB_USERNAME }}" --password-stdin
 
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/main'
