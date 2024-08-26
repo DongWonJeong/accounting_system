@@ -10,13 +10,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
 
     steps:
-      # 1. 소스 코드를 체크아웃.
+      # 1. 소스 코드를 체크아웃
       - name: Check out code
         uses: actions/checkout@v2
 
@@ -45,8 +44,10 @@ jobs:
 
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/main'
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         run: |
-          docker build -t dongwonjeong/user_service:latest ./user_service
-          docker build -t dongwonjeong/streaming_service:latest ./streaming_service
-          docker push dongwonjeong/user_service:latest
-          docker push dongwonjeong/streaming_service:latest
+          docker build -t ${{ env.DOCKER_HUB_USERNAME }}/user_service:latest ./user_service
+          docker build -t ${{ env.DOCKER_HUB_USERNAME }}/streaming_service:latest ./streaming_service
+          docker push ${{ env.DOCKER_HUB_USERNAME }}/user_service:latest
+          docker push ${{ env.DOCKER_HUB_USERNAME }}/streaming_service:latest
