@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
+          distribution: 'temurin'
 
       # 3. Gradle을 사용하여 빌드 및 테스트 실행
       - name: Build with Gradle
