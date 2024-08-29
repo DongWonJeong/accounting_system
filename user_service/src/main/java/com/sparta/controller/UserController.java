@@ -30,11 +30,9 @@ public class UserController {
         return userService.login(loginRequestDto);
     }
 
-
     // 로그아웃
     @PostMapping("/logout")
     public String logout(@RequestParam Long id){
         return userService.logout(id);
     }
-
 }

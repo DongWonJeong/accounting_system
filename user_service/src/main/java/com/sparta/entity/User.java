@@ -30,10 +30,11 @@ public class User {
     @Column(name="role", nullable = false)
     private Role role;
 
-    public User(SignUpRequestDto signUpRequestDto) {
-        this.userName = signUpRequestDto.getUserName();
-        this.email = signUpRequestDto.getEmail();
-        this.password = signUpRequestDto.getPassword();
-        this.role = signUpRequestDto.getRole();
+    public User(String userName, String email, String encryptedPassword, Role role) {
+        this.userName = userName;
+        this.email = email;
+        this.password = encryptedPassword;
+        this.role = role;
     }
+
 }

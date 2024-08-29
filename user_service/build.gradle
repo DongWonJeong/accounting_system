@@ -22,17 +22,17 @@ dependencies {
     // MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
 
-//    // security
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
-//    testImplementation 'org.springframework.security:spring-security-test'
+    // security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 
     // Validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-//
-//    // JWT
-//    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-//    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-//    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+    // JWT
+    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 }
 
 test {
