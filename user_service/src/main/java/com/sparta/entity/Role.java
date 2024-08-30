@@ -1,7 +1,16 @@
 package com.sparta.entity;
 
-public enum Role {
-    USER,
-    SELLER;
+import lombok.Getter;
 
+@Getter
+public enum Role {
+
+    USER("ROLE_USER"),
+    SELLER("ROLE_SELLER");
+
+    private final String authority;
+
+    Role(String authority) {
+        this.authority = authority;
+    }
 }

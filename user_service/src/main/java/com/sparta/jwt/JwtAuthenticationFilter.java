@@ -13,6 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import java.io.IOException;
 
+// JWT 인증 처리
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtUtil jwtUtil;
@@ -27,13 +28,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String token = request.getHeader("Authorization");
 
+        // 토큰 추출
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
         }
 
-        if (token != null && jwtUtil.validateToken(token, jwtUtil.getUsernameFromToken(token))) {
-            String username = jwtUtil.getUsernameFromToken(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        // 유효성 검사
+        if (token != null && jwtUtil.validateToken(token, jwtUtil.getEmailFromToken(token))) {
+            String email = jwtUtil.getEmailFromToken(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         }
 
@@ -41,7 +44,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    // 인증 성공 -> SecurityContextHolder 인증 정보 설정 및 필터 체인을 계속 진행
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                            FilterChain chain, Authentication authResult) throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(authResult);
         chain.doFilter(request, response);
     }

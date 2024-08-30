@@ -26,6 +26,7 @@ public class WebSecurityConfig  {
     }
 
     @Bean
+    // 비밀번호 암호화
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -41,6 +42,7 @@ public class WebSecurityConfig  {
                         .requestMatchers("/api/users/signup", "/api/users/login", "/api/users/logout").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         )
+                // JWT 인증 필터 -> 사용자의 인증을 처리
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsServiceImpl), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
