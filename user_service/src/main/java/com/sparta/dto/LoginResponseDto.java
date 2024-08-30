@@ -11,11 +11,13 @@ public class LoginResponseDto {
     private String username;
     private String email;
     private Role role;
+    private String token;
 
-    public LoginResponseDto(User user) {
+    public LoginResponseDto(User user, String token) {
         this.id = user.getId();
         this.username = user.getUserName();
         this.email = user.getEmail();
         this.role = user.getRole();
+        this.token = token;
     }
 }

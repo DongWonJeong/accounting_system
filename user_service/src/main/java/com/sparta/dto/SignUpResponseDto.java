@@ -12,10 +12,10 @@ public class SignUpResponseDto {
     private String email;
     private Role role;
 
-    public SignUpResponseDto(User User) {
-        this.id = User.getId();
-        this.userName = User.getUserName();
-        this.email = User.getEmail();
-        this.role = User.getRole();
+    public SignUpResponseDto(User user) {
+        this.id = user.getId();
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.role = user.getRole();
     }
 }

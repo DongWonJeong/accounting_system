@@ -5,6 +5,7 @@ import com.sparta.dto.LoginResponseDto;
 import com.sparta.dto.SignUpRequestDto;
 import com.sparta.dto.SignUpResponseDto;
 import com.sparta.entity.User;
+import com.sparta.jwt.JwtUtil;
 import com.sparta.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     // 회원가입
@@ -59,8 +62,10 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
+        String token = jwtUtil.generateToken(user.getEmail());
+
         // 로그인 성공 시 사용자 정보 반환
-        return new LoginResponseDto(user);
+        return new LoginResponseDto(user,token);
     }
 
     // 로그아웃

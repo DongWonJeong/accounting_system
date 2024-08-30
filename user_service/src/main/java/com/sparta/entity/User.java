@@ -36,5 +36,4 @@ public class User {
         this.password = encryptedPassword;
         this.role = role;
     }
-
 }
