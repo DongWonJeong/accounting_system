@@ -32,7 +32,12 @@ public class UserController {
 
     // 로그아웃
     @PostMapping("/logout")
-    public String logout(@RequestParam Long id){
-        return userService.logout(id);
+    public String logout(@RequestHeader("Authorization") String token){
+        return userService.logout(token);
     }
+//    @PostMapping("/logout")
+//    public String logout(@RequestParam Long id){
+//        return userService.logout(id);
+//    }ㅋㅋ
+
 }

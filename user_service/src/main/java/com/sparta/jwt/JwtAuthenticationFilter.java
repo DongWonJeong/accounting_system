@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,16 +32,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 토큰 추출
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
+        } else {
+            throw new BadCredentialsException("로그인 실패");
         }
 
-        // 유효성 검사
-        if (token != null && jwtUtil.validateToken(token, jwtUtil.getEmailFromToken(token))) {
+        try {
             String email = jwtUtil.getEmailFromToken(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-            return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        }
 
-        return null;
+            if (jwtUtil.validateToken(token, email)) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            } else {
+                throw new BadCredentialsException("로그인 실패");
+            }
+        } catch (Exception e) {
+            throw new BadCredentialsException("로그인 실패", e);
+        }
     }
 
     @Override

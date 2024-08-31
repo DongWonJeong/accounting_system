@@ -5,6 +5,7 @@ import com.sparta.dto.LoginResponseDto;
 import com.sparta.dto.SignUpRequestDto;
 import com.sparta.dto.SignUpResponseDto;
 import com.sparta.entity.User;
+import com.sparta.jwt.JwtBlackList;
 import com.sparta.jwt.JwtUtil;
 import com.sparta.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,12 +16,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtBlackList jwtBlackList;
     private final JwtUtil jwtUtil;
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtBlackList jwtBlackList, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtBlackList = jwtBlackList;
         this.jwtUtil = jwtUtil;
     }
 
@@ -69,7 +72,14 @@ public class UserService {
     }
 
     // 로그아웃
-    public String logout(Long id) {
+    public String logout(String token) {
+
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        jwtBlackList.addTokenToBlacklist(token);
+
         return "로그아웃되었습니다.";
     }
 }

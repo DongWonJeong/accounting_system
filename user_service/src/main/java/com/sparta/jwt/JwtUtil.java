@@ -15,8 +15,14 @@ public class JwtUtil {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
+    private final JwtBlackList jwtBlackList;
+
     // 토큰 만료 시간
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간
+
+    public JwtUtil(JwtBlackList jwtBlackList) {
+        this.jwtBlackList = jwtBlackList;
+    }
 
     // Base64 디코딩
     private byte[] getSecretKeyBytes() {
@@ -53,6 +59,6 @@ public class JwtUtil {
 
     // 토큰 유효성 검사
     public boolean validateToken(String token, String email) {
-        return !isTokenExpired(token) && email.equals(getEmailFromToken(token));
+        return !isTokenExpired(token) && email.equals(getEmailFromToken(token)) && !jwtBlackList.isTokenBlacklisted(token);
     }
 }
