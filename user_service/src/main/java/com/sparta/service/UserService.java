@@ -8,9 +8,11 @@ import com.sparta.entity.User;
 import com.sparta.jwt.JwtBlackList;
 import com.sparta.jwt.JwtUtil;
 import com.sparta.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -72,13 +74,25 @@ public class UserService {
     }
 
     // 로그아웃
-    public String logout(String token) {
+    public String logout(Long id, String token) {
+        log.info("id: {}, token: {}", id, token);
 
-        if (token != null && token.startsWith("Bearer ")) {
-            token = token.substring(7);
+        // JWT 토큰에서 사용자 이메일 추출
+        // 로그아웃 요청을 처리할 때 사용자의 인증을 확인하고, 사용자 ID의 일치 여부를 검증하기 위함.
+        String email = jwtUtil.getEmailFromToken(token);
+
+        // 사용자 조회
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입된 사용자가 아닙니다."));
+
+        // 사용자 ID 검증
+        if (!user.getId().equals(id)) {
+            throw new IllegalArgumentException("사용자 ID가 일치하지 않습니다.");
         }
 
+        // 블랙리스트에 토큰 추가
         jwtBlackList.addTokenToBlacklist(token);
+        log.info("id: {}, token: {}", id, token);
 
         return "로그아웃되었습니다.";
     }

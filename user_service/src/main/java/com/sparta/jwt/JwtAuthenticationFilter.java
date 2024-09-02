@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 throw new BadCredentialsException("로그인 실패");
             }
         } catch (Exception e) {
-            throw new BadCredentialsException("로그인 실패", e);
+            throw new BadCredentialsException("로그인 실패");
         }
     }
 
