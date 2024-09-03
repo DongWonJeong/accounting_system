@@ -38,3 +38,6 @@ out/
 
 ### docker-compose ###
 docker-compose.yml
+
+### user_service - applicationn.properties ###
+user_service/src/main/resources/application.properties
