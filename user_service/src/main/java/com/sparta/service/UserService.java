@@ -21,7 +21,6 @@ public class UserService {
     private final JwtBlackList jwtBlackList;
     private final JwtUtil jwtUtil;
 
-
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtBlackList jwtBlackList, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;

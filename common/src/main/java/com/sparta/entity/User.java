@@ -1,6 +1,5 @@
 package com.sparta.entity;
 
-import com.sparta.dto.SignUpRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,3 +36,4 @@ public class User {
         this.role = role;
     }
 }
+
