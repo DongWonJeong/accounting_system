@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -37,4 +38,9 @@ public class Video {
     @Column(name="status", nullable=false)
     private Boolean status;
 
+    public Video(UploadRequestDto uploadRequestDto) {
+        this.title = uploadRequestDto.getTitle();
+        this.totalPlayTime = uploadRequestDto.getTotalPlayTime();
+        this.uploadDate = LocalDateTime.now();
+    }
 }

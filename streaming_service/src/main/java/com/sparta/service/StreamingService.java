@@ -20,6 +20,7 @@ public class StreamingService {
         this.userRepository = userRepository;
     }
 
+    // 비디오 등록
     public UploadResponseDto upload(UploadRequestDto uploadRequestDto) {
 
         // 사용자 조회
@@ -31,12 +32,18 @@ public class StreamingService {
             throw new IllegalArgumentException("동영상 등록할 수 있는 권한이 없습니다.");
         }
 
-//        Video video = new Video(uploadRequestDto);
-//
-//        Video savedVideo = videoRepository.save(video);
-//
-////        UploadResponseDto uploadResponseDto = new UploadResponseDto(savedVideo);
+        Video video = new Video(uploadRequestDto);
 
-        return null;
+        Video savedVideo = videoRepository.save(video);
+
+        UploadResponseDto uploadResponseDto = new UploadResponseDto(savedVideo);
+
+        return uploadResponseDto;
     }
+
+    // 비디오 재생
+
+    // 비디오 정지
+
+    // 비디오 시청 완료
 }

@@ -1,5 +1,6 @@
 package com.sparta.dto.upload;
 
+import com.sparta.entity.Video;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -12,14 +13,12 @@ public class UploadResponseDto {
     private String title;
     private int totalPlayTime;
     private LocalDateTime uploadDate;
-    private int videoViews;
 
-    private UploadResponseDto(Long videoId, Long userId, String title, int totalPlayTime, LocalDateTime uploadDate, int videoViews) {
-        this.videoId = videoId;
-        this.userId = userId;
-        this.title = title;
-        this.totalPlayTime = totalPlayTime;
-        this.uploadDate = uploadDate;
-        this.videoViews = videoViews;
+    public UploadResponseDto(Video video) {
+        this.videoId = video.getId();
+        this.userId = video.getUser().getId();
+        this.title = video.getTitle();
+        this.totalPlayTime = video.getTotalPlayTime();
+        this.uploadDate = video.getUploadDate();
     }
 }
