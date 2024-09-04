@@ -41,3 +41,9 @@ docker-compose.yml
 
 ### user_service - applicationn.properties ###
 user_service/src/main/resources/application.properties
+
+### streaming_service - applicationn.properties ###
+streaming_service/src/main/resources/application.properties
+
+### common - applicationn.properties ###
+common/src/main/resources/application.properties
