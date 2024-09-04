@@ -1,9 +1,9 @@
 package com.sparta.controller;
 
-import com.sparta.dto.LoginRequestDto;
-import com.sparta.dto.LoginResponseDto;
-import com.sparta.dto.SignUpRequestDto;
-import com.sparta.dto.SignUpResponseDto;
+import com.sparta.dto.login.LoginRequestDto;
+import com.sparta.dto.login.LoginResponseDto;
+import com.sparta.dto.signUp.SignUpRequestDto;
+import com.sparta.dto.signUp.SignUpResponseDto;
 import com.sparta.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

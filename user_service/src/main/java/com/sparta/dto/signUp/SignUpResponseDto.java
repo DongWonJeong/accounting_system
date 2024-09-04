@@ -1,23 +1,21 @@
-package com.sparta.dto;
+package com.sparta.dto.signUp;
 
 import com.sparta.entity.Role;
 import com.sparta.entity.User;
 import lombok.Getter;
 
 @Getter
-public class LoginResponseDto {
+public class SignUpResponseDto {
 
-    private Long id;
-    private String username;
+    private  Long id;
+    private String userName;
     private String email;
     private Role role;
-    private String token;
 
-    public LoginResponseDto(User user, String token) {
+    public SignUpResponseDto(User user) {
         this.id = user.getId();
-        this.username = user.getUserName();
+        this.userName = user.getUserName();
         this.email = user.getEmail();
         this.role = user.getRole();
-        this.token = token;
     }
 }
