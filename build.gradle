@@ -22,7 +22,7 @@ subprojects {
     group 'com.example'
     version '0.0.1-SNAPSHOT'
 
-    sourceCompatibility = '17'
+    sourceCompatibility = '21'
 
     apply plugin: 'java'
     apply plugin: 'java-library'
@@ -47,6 +47,12 @@ subprojects {
         //lombok
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+
+        // JPA
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+        // MySQL
+        runtimeOnly 'com.mysql:mysql-connector-j'
     }
 
     test {

@@ -1,6 +1,5 @@
 package com.sparta.entity;
 
-import com.sparta.dto.SignUpRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -37,3 +36,4 @@ public class User {
         this.role = role;
     }
 }
+

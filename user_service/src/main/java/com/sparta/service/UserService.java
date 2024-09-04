@@ -1,9 +1,9 @@
 package com.sparta.service;
 
-import com.sparta.dto.LoginRequestDto;
-import com.sparta.dto.LoginResponseDto;
-import com.sparta.dto.SignUpRequestDto;
-import com.sparta.dto.SignUpResponseDto;
+import com.sparta.dto.login.LoginRequestDto;
+import com.sparta.dto.login.LoginResponseDto;
+import com.sparta.dto.signUp.SignUpRequestDto;
+import com.sparta.dto.signUp.SignUpResponseDto;
 import com.sparta.entity.User;
 import com.sparta.jwt.JwtBlackList;
 import com.sparta.jwt.JwtUtil;
@@ -20,7 +20,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtBlackList jwtBlackList;
     private final JwtUtil jwtUtil;
-
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtBlackList jwtBlackList, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
