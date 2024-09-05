@@ -1,5 +1,7 @@
 package com.sparta.service;
 
+import com.sparta.dto.completion.CompletionRequestDto;
+import com.sparta.dto.completion.CompletionResponseDto;
 import com.sparta.dto.play.PlayRequestDto;
 import com.sparta.dto.play.PlayResponseDto;
 import com.sparta.dto.stop.StopRequestDto;
@@ -86,6 +88,13 @@ public class StreamingService {
     // 비디오 정지
     public StopResponseDto stop(StopRequestDto stopRequestDto) {
 
+        // 사용자와 비디오 조회
+        User user = userRepository.findById(stopRequestDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        Video video = videoRepository.findById(stopRequestDto.getVideoId())
+                .orElseThrow(() -> new IllegalArgumentException("비디오를 찾을 수 없습니다."));
+
         // 비디오 시청 기록 여부
         VideoHistory videoHistory = videoHistoryRepository.findByUserIdAndVideoId(stopRequestDto.getUserId(), stopRequestDto.getVideoId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자와 비디오 시청 기록이 없습니다."));
@@ -95,10 +104,36 @@ public class StreamingService {
         videoHistory.setLastPlayTime(LocalDateTime.now());
         VideoHistory updatedVideoHistory = videoHistoryRepository.save(videoHistory);
 
-        StopResponseDto stopResponseDto = new StopResponseDto(updatedVideoHistory);
+        StopResponseDto stopResponseDto = new StopResponseDto(user, video, updatedVideoHistory.getCurrentPosition(), updatedVideoHistory.getLastPlayTime());
 
         return stopResponseDto;
     }
 
     // 비디오 시청 완료
+    public CompletionResponseDto completion(CompletionRequestDto completionRequestDto) {
+
+        // 사용자와 비디오 조회
+        User user = userRepository.findById(completionRequestDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        Video video = videoRepository.findById(completionRequestDto.getVideoId())
+                .orElseThrow(() -> new IllegalArgumentException("비디오를 찾을 수 없습니다."));
+
+        // 비디오 시청 기록 조회
+        VideoHistory videoHistory = videoHistoryRepository.findByUserIdAndVideoId(completionRequestDto.getUserId(), completionRequestDto.getVideoId())
+                .orElseThrow(() -> new IllegalArgumentException("비디오 시청 기록이 없습니다."));
+
+        // 시청 완료 여부
+        boolean isCompleted = videoHistory.getCurrentPosition() == video.getTotalPlayTime();
+
+        // 시청 완료 상태 업데이트
+        if (isCompleted) {
+            videoHistory.setStatus(true);
+            videoHistoryRepository.save(videoHistory);
+        }
+
+        CompletionResponseDto completionResponseDto = new CompletionResponseDto(user, video, isCompleted);
+
+        return completionResponseDto;
+    }
 }

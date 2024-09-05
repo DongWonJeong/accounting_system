@@ -35,15 +35,11 @@ public class Video {
     @Column(name="upload_date", nullable=false)
     private LocalDateTime uploadDate;
 
-    @Column(name="status", nullable=false)
-    private Boolean status;
-
     public Video(UploadRequestDto uploadRequestDto, User user) {
         this.user = user;
         this.title = uploadRequestDto.getTitle();
         this.totalPlayTime = uploadRequestDto.getTotalPlayTime();
         this.uploadDate = LocalDateTime.now();
         this.videoViews = 0;
-        this.status = false;
     }
 }

@@ -33,6 +33,9 @@ public class VideoHistory {
     @Column(name="last_play_time", nullable = false)
     private LocalDateTime lastPlayTime;
 
+    @Column(name="status", nullable = false)
+    private Boolean status = false;
+
     public VideoHistory(User user, Video video, int currentPosition, LocalDateTime lastPlayTime) {
         this.user = user;
         this.video = video;

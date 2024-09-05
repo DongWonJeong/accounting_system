@@ -1,5 +1,7 @@
 package com.sparta.controller;
 
+import com.sparta.dto.completion.CompletionRequestDto;
+import com.sparta.dto.completion.CompletionResponseDto;
 import com.sparta.dto.play.PlayRequestDto;
 import com.sparta.dto.play.PlayResponseDto;
 import com.sparta.dto.stop.StopRequestDto;
@@ -40,6 +42,9 @@ public class StreamingController {
         return streamingService.stop(stopRequestDto);
     }
 
-//    // 비디오 시청 완료
-//    @PostMapping("/completion")
+    // 비디오 시청 완료
+    @PostMapping("/completion")
+    public CompletionResponseDto completion(@RequestBody CompletionRequestDto completionRequestDto) {
+        return streamingService.completion(completionRequestDto);
+    }
 }
