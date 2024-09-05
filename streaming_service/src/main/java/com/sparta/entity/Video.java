@@ -27,10 +27,10 @@ public class Video {
     private String title;
 
     @Column(name="total_play_time", nullable=false)
-    private Integer totalPlayTime;
+    private int totalPlayTime;
 
     @Column(name="video_views", nullable=false)
-    private Integer videoViews;
+    private int videoViews;
 
     @Column(name="upload_date", nullable=false)
     private LocalDateTime uploadDate;
@@ -38,9 +38,12 @@ public class Video {
     @Column(name="status", nullable=false)
     private Boolean status;
 
-    public Video(UploadRequestDto uploadRequestDto) {
+    public Video(UploadRequestDto uploadRequestDto, User user) {
+        this.user = user;
         this.title = uploadRequestDto.getTitle();
         this.totalPlayTime = uploadRequestDto.getTotalPlayTime();
         this.uploadDate = LocalDateTime.now();
+        this.videoViews = 0;
+        this.status = false;
     }
 }

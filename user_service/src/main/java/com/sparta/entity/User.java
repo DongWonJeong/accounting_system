@@ -1,5 +1,6 @@
 package com.sparta.entity;
 
+import com.sparta.dto.signUp.SignUpRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,11 +30,11 @@ public class User {
     @Column(name="role", nullable = false)
     private Role role;
 
-    public User(String userName, String email, String encryptedPassword, Role role) {
-        this.userName = userName;
-        this.email = email;
+    public User(SignUpRequestDto signUpRequestDto, String encryptedPassword) {
+        this.userName = signUpRequestDto.getUserName();
+        this.email = signUpRequestDto.getEmail();
         this.password = encryptedPassword;
-        this.role = role;
+        this.role = signUpRequestDto.getRole();
     }
 }
 

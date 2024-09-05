@@ -40,12 +40,7 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
 
         //사용자 등록 (DTO의 각 필드를 직접 전달하는 방식으로 수정)
-        User user = new User(
-                signUpRequestDto.getUserName(),
-                signUpRequestDto.getEmail(),
-                encryptedPassword,
-                signUpRequestDto.getRole()
-        );
+        User user = new User(signUpRequestDto,encryptedPassword);
 
         User saveUser = userRepository.save(user);
 

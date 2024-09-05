@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "video_ad")
-public class Video_Ad {
+public class VideoAd {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
