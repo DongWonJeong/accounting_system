@@ -1,4 +1,4 @@
-package com.sparta.dto.play;
+package com.sparta.dto.video.play;
 
 import com.sparta.entity.VideoHistory;
 import lombok.Getter;

@@ -1,13 +1,13 @@
 package com.sparta.service;
 
-import com.sparta.dto.completion.CompletionRequestDto;
-import com.sparta.dto.completion.CompletionResponseDto;
-import com.sparta.dto.play.PlayRequestDto;
-import com.sparta.dto.play.PlayResponseDto;
-import com.sparta.dto.stop.StopRequestDto;
-import com.sparta.dto.stop.StopResponseDto;
-import com.sparta.dto.upload.UploadRequestDto;
-import com.sparta.dto.upload.UploadResponseDto;
+import com.sparta.dto.video.completion.CompletionRequestDto;
+import com.sparta.dto.video.completion.CompletionResponseDto;
+import com.sparta.dto.video.play.PlayRequestDto;
+import com.sparta.dto.video.play.PlayResponseDto;
+import com.sparta.dto.video.stop.StopRequestDto;
+import com.sparta.dto.video.stop.StopResponseDto;
+import com.sparta.dto.video.upload.UploadRequestDto;
+import com.sparta.dto.video.upload.UploadResponseDto;
 import com.sparta.entity.Role;
 import com.sparta.entity.User;
 import com.sparta.entity.Video;
@@ -48,7 +48,6 @@ public class StreamingService {
         if (videoRepository.existsByUserIdAndTitle(uploadRequestDto.getUserId(), uploadRequestDto.getTitle())) {
             throw new IllegalArgumentException("중복된 동영상 입니다.");
         }
-
 
         Video video = new Video(uploadRequestDto,user);
 

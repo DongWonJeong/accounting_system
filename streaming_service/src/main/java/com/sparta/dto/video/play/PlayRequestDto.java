@@ -1,9 +1,9 @@
-package com.sparta.dto.completion;
+package com.sparta.dto.video.play;
 
 import lombok.Getter;
 
 @Getter
-public class CompletionRequestDto {
+public class PlayRequestDto {
 
     private Long userId;
     private Long videoId;

@@ -1,4 +1,4 @@
-package com.sparta.dto.stop;
+package com.sparta.dto.video.stop;
 
 import lombok.Getter;
 

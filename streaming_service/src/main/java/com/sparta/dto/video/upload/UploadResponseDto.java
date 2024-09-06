@@ -1,4 +1,4 @@
-package com.sparta.dto.upload;
+package com.sparta.dto.video.upload;
 
 import com.sparta.entity.Video;
 import lombok.Getter;

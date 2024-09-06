@@ -1,6 +1,5 @@
 package com.sparta.entity;
 
-import com.sparta.dto.play.PlayRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

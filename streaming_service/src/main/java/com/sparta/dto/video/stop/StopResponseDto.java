@@ -1,4 +1,4 @@
-package com.sparta.dto.stop;
+package com.sparta.dto.video.stop;
 
 import com.sparta.entity.User;
 import com.sparta.entity.Video;

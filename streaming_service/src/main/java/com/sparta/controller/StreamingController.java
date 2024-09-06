@@ -1,13 +1,13 @@
 package com.sparta.controller;
 
-import com.sparta.dto.completion.CompletionRequestDto;
-import com.sparta.dto.completion.CompletionResponseDto;
-import com.sparta.dto.play.PlayRequestDto;
-import com.sparta.dto.play.PlayResponseDto;
-import com.sparta.dto.stop.StopRequestDto;
-import com.sparta.dto.stop.StopResponseDto;
-import com.sparta.dto.upload.UploadRequestDto;
-import com.sparta.dto.upload.UploadResponseDto;
+import com.sparta.dto.video.completion.CompletionRequestDto;
+import com.sparta.dto.video.completion.CompletionResponseDto;
+import com.sparta.dto.video.play.PlayRequestDto;
+import com.sparta.dto.video.play.PlayResponseDto;
+import com.sparta.dto.video.stop.StopRequestDto;
+import com.sparta.dto.video.stop.StopResponseDto;
+import com.sparta.dto.video.upload.UploadRequestDto;
+import com.sparta.dto.video.upload.UploadResponseDto;
 import com.sparta.service.StreamingService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,4 +1,4 @@
-package com.sparta.dto.completion;
+package com.sparta.dto.video.completion;
 
 import com.sparta.entity.User;
 import com.sparta.entity.Video;

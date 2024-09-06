@@ -1,6 +1,6 @@
 package com.sparta.entity;
 
-import com.sparta.dto.upload.UploadRequestDto;
+import com.sparta.dto.video.upload.UploadRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
