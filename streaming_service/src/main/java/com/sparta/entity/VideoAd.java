@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "video_ad")
-public class Video_Ad {
+public class VideoAd {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +23,9 @@ public class Video_Ad {
     @ManyToOne
     @JoinColumn(name = "ad_id", nullable = false)
     private Ad ad;
+
+    public VideoAd(Video video, Ad ad) {
+        this.video = video;
+        this.ad = ad;
+    }
 }

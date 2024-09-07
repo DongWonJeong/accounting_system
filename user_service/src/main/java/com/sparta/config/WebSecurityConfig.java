@@ -42,6 +42,8 @@ public class WebSecurityConfig  {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
                         // /api/users/ 경로에 대한 접근 허용
                         .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers("/api/videos/**").permitAll()
+                        .requestMatchers("/api/ads/**").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         )
                 // JWT 인증 필터 -> 사용자의 인증을 처리

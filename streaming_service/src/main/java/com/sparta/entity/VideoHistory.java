@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "video_history")
-public class Video_History {
+public class VideoHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +27,18 @@ public class Video_History {
     private Video video;
 
     @Column(name="current_position", nullable = false)
-    private Integer currentPosition;
+    private int currentPosition;
 
     @Column(name="last_play_time", nullable = false)
     private LocalDateTime lastPlayTime;
+
+    @Column(name="is_completed", nullable = false)
+    private Boolean isCompleted = false;
+
+    public VideoHistory(User user, Video video, int currentPosition, LocalDateTime lastPlayTime) {
+        this.user = user;
+        this.video = video;
+        this.currentPosition = currentPosition;
+        this.lastPlayTime = lastPlayTime;
+    }
 }

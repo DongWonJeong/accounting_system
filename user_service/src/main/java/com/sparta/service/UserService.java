@@ -1,5 +1,6 @@
 package com.sparta.service;
 
+import com.sparta.dto.info.UserInfoResponseDto;
 import com.sparta.dto.login.LoginRequestDto;
 import com.sparta.dto.login.LoginResponseDto;
 import com.sparta.dto.signUp.SignUpRequestDto;
@@ -11,6 +12,9 @@ import com.sparta.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -28,6 +32,19 @@ public class UserService {
         this.jwtUtil = jwtUtil;
     }
 
+    // 사용자 조회
+    public List<UserInfoResponseDto> getUsers() {
+
+        List<UserInfoResponseDto> userInfoResponseDto = new ArrayList<>();
+        List<User> users = userRepository.findAll();
+
+        for (User user : users) {
+            userInfoResponseDto.add(new UserInfoResponseDto(user));
+        }
+
+        return userInfoResponseDto;
+    }
+
     // 회원가입
     public SignUpResponseDto signup(SignUpRequestDto signUpRequestDto) {
 
@@ -40,12 +57,7 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
 
         //사용자 등록 (DTO의 각 필드를 직접 전달하는 방식으로 수정)
-        User user = new User(
-                signUpRequestDto.getUserName(),
-                signUpRequestDto.getEmail(),
-                encryptedPassword,
-                signUpRequestDto.getRole()
-        );
+        User user = new User(signUpRequestDto,encryptedPassword);
 
         User saveUser = userRepository.save(user);
 

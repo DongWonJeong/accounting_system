@@ -1,10 +1,11 @@
 package com.sparta.entity;
 
-import com.sparta.dto.upload.UploadRequestDto;
+import com.sparta.dto.video.upload.UploadRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -26,15 +27,19 @@ public class Video {
     private String title;
 
     @Column(name="total_play_time", nullable=false)
-    private Integer totalPlayTime;
+    private int totalPlayTime;
 
     @Column(name="video_views", nullable=false)
-    private Integer videoViews;
+    private int videoViews;
 
     @Column(name="upload_date", nullable=false)
     private LocalDateTime uploadDate;
 
-    @Column(name="status", nullable=false)
-    private Boolean status;
-
+    public Video(UploadRequestDto uploadRequestDto, User user) {
+        this.user = user;
+        this.title = uploadRequestDto.getTitle();
+        this.totalPlayTime = uploadRequestDto.getTotalPlayTime();
+        this.uploadDate = LocalDateTime.now();
+        this.videoViews = 0;
+    }
 }
