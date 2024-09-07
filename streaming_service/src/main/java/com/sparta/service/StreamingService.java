@@ -86,9 +86,14 @@ public class StreamingService {
         Video video = videoRepository.findById(playRequestDto.getVideoId())
                 .orElseThrow(() -> new IllegalArgumentException("비디오를 찾을 수 없습니다."));
 
-        // 비디오 조회수 증가
-        video.setVideoViews(video.getVideoViews() + 1);
-        videoRepository.save(video);
+        // 비디오의 소유자와 현재 사용자가 같은지 확인
+        boolean isVideoOwner = video.getUser().equals(user);
+
+        // 비디오 조회수 증가 -> 사용자가 비디오 소유자가 아닐 경우
+        if (!isVideoOwner) {
+            video.setVideoViews(video.getVideoViews() + 1);
+            videoRepository.save(video);
+        }
 
         // 비디오 시청 기록 확인 및 불러오는 메서드
         VideoHistory videoHistory = videoHistoryRepository.findByUserIdAndVideoId(playRequestDto.getUserId(), playRequestDto.getVideoId())
@@ -103,9 +108,11 @@ public class StreamingService {
         for (VideoAd videoAd : videoAds) {
             Ad ad = videoAd.getAd();
 
-            // 광고 시청 횟수 증가
-            ad.setAdViews(ad.getAdViews() + 1);
-            adRepository.save(ad);
+            // 광고 시청 횟수 증가 -> 비디오 소유자가 아닐 경우
+            if (!isVideoOwner) {
+                ad.setAdViews(ad.getAdViews() + 1);
+                adRepository.save(ad);
+            }
         }
 
         PlayResponseDto playResponseDto = new PlayResponseDto(videoHistory);
