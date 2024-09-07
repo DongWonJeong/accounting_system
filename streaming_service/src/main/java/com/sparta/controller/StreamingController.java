@@ -1,6 +1,5 @@
 package com.sparta.controller;
 
-import com.sparta.dto.ad.info.AdInfoResponseDto;
 import com.sparta.dto.video.completion.CompletionRequestDto;
 import com.sparta.dto.video.completion.CompletionResponseDto;
 import com.sparta.dto.video.info.VideoInfoResponseDto;

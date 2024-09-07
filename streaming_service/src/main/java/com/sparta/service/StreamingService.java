@@ -11,9 +11,7 @@ import com.sparta.dto.video.stop.StopResponseDto;
 import com.sparta.dto.video.upload.UploadRequestDto;
 import com.sparta.dto.video.upload.UploadResponseDto;
 import com.sparta.entity.*;
-import com.sparta.repository.UserRepository;
-import com.sparta.repository.VideoHistoryRepository;
-import com.sparta.repository.VideoRepository;
+import com.sparta.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,11 +23,16 @@ public class StreamingService {
 
     private final VideoRepository videoRepository;
     private final UserRepository userRepository;
+    private final AdRepository adRepository;
+    private final VideoAdRepository videoAdRepository;
     private final VideoHistoryRepository videoHistoryRepository;
 
-    public StreamingService(VideoRepository videoRepository, UserRepository userRepository, VideoHistoryRepository videoHistoryRepository) {
+    public StreamingService(VideoRepository videoRepository, UserRepository userRepository, AdRepository adRepository,
+                            VideoAdRepository videoAdRepository, VideoHistoryRepository videoHistoryRepository) {
         this.videoRepository = videoRepository;
         this.userRepository = userRepository;
+        this.adRepository = adRepository;
+        this.videoAdRepository = videoAdRepository;
         this.videoHistoryRepository = videoHistoryRepository;
     }
 
@@ -91,9 +94,21 @@ public class StreamingService {
         VideoHistory videoHistory = videoHistoryRepository.findByUserIdAndVideoId(playRequestDto.getUserId(), playRequestDto.getVideoId())
                 .orElseGet(() -> new VideoHistory(user, video, 0, LocalDateTime.now()));
 
-        VideoHistory savedvideoHistory = videoHistoryRepository.save(videoHistory);
+        // 비디오 시청 기록 저장
+        videoHistory = videoHistoryRepository.save(videoHistory);
 
-        PlayResponseDto playResponseDto = new PlayResponseDto(savedvideoHistory);
+        // 비디오와 연결된 광고 시청 처리
+        List<VideoAd> videoAds = videoAdRepository.findAllByVideoId(video.getId());
+
+        for (VideoAd videoAd : videoAds) {
+            Ad ad = videoAd.getAd();
+
+            // 광고 시청 횟수 증가
+            ad.setAdViews(ad.getAdViews() + 1);
+            adRepository.save(ad);
+        }
+
+        PlayResponseDto playResponseDto = new PlayResponseDto(videoHistory);
 
         return playResponseDto;
     }
@@ -141,7 +156,7 @@ public class StreamingService {
 
         // 시청 완료 상태 업데이트
         if (isCompleted) {
-            videoHistory.setStatus(true);
+            videoHistory.setIsCompleted(true);
             videoHistoryRepository.save(videoHistory);
         }
 

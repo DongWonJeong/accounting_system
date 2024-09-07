@@ -23,4 +23,9 @@ public class VideoAd {
     @ManyToOne
     @JoinColumn(name = "ad_id", nullable = false)
     private Ad ad;
+
+    public VideoAd(Video video, Ad ad) {
+        this.video = video;
+        this.ad = ad;
+    }
 }

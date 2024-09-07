@@ -32,8 +32,8 @@ public class VideoHistory {
     @Column(name="last_play_time", nullable = false)
     private LocalDateTime lastPlayTime;
 
-    @Column(name="status", nullable = false)
-    private Boolean status = false;
+    @Column(name="is_completed", nullable = false)
+    private Boolean isCompleted = false;
 
     public VideoHistory(User user, Video video, int currentPosition, LocalDateTime lastPlayTime) {
         this.user = user;
