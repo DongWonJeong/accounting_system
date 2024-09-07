@@ -1,7 +1,9 @@
 package com.sparta.controller;
 
+import com.sparta.dto.ad.info.AdInfoResponseDto;
 import com.sparta.dto.video.completion.CompletionRequestDto;
 import com.sparta.dto.video.completion.CompletionResponseDto;
+import com.sparta.dto.video.info.VideoInfoResponseDto;
 import com.sparta.dto.video.play.PlayRequestDto;
 import com.sparta.dto.video.play.PlayResponseDto;
 import com.sparta.dto.video.stop.StopRequestDto;
@@ -9,10 +11,9 @@ import com.sparta.dto.video.stop.StopResponseDto;
 import com.sparta.dto.video.upload.UploadRequestDto;
 import com.sparta.dto.video.upload.UploadResponseDto;
 import com.sparta.service.StreamingService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/videos")
@@ -22,6 +23,12 @@ public class StreamingController {
 
     public StreamingController(StreamingService streamingService) {
         this.streamingService = streamingService;
+    }
+
+    // 비디오 조회
+    @GetMapping("/list")
+    public List<VideoInfoResponseDto> getVideos() {
+        return streamingService.getVideos();
     }
 
     // 비디오 등록

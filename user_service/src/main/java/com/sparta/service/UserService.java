@@ -1,5 +1,6 @@
 package com.sparta.service;
 
+import com.sparta.dto.info.UserInfoResponseDto;
 import com.sparta.dto.login.LoginRequestDto;
 import com.sparta.dto.login.LoginResponseDto;
 import com.sparta.dto.signUp.SignUpRequestDto;
@@ -11,6 +12,9 @@ import com.sparta.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -26,6 +30,19 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
         this.jwtBlackList = jwtBlackList;
         this.jwtUtil = jwtUtil;
+    }
+
+    // 사용자 조회
+    public List<UserInfoResponseDto> getUsers() {
+
+        List<UserInfoResponseDto> userInfoResponseDto = new ArrayList<>();
+        List<User> users = userRepository.findAll();
+
+        for (User user : users) {
+            userInfoResponseDto.add(new UserInfoResponseDto(user));
+        }
+
+        return userInfoResponseDto;
     }
 
     // 회원가입

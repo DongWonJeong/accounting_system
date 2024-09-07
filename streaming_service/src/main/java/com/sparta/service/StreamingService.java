@@ -1,23 +1,24 @@
 package com.sparta.service;
 
+import com.sparta.dto.ad.info.AdInfoResponseDto;
 import com.sparta.dto.video.completion.CompletionRequestDto;
 import com.sparta.dto.video.completion.CompletionResponseDto;
+import com.sparta.dto.video.info.VideoInfoResponseDto;
 import com.sparta.dto.video.play.PlayRequestDto;
 import com.sparta.dto.video.play.PlayResponseDto;
 import com.sparta.dto.video.stop.StopRequestDto;
 import com.sparta.dto.video.stop.StopResponseDto;
 import com.sparta.dto.video.upload.UploadRequestDto;
 import com.sparta.dto.video.upload.UploadResponseDto;
-import com.sparta.entity.Role;
-import com.sparta.entity.User;
-import com.sparta.entity.Video;
-import com.sparta.entity.VideoHistory;
+import com.sparta.entity.*;
 import com.sparta.repository.UserRepository;
 import com.sparta.repository.VideoHistoryRepository;
 import com.sparta.repository.VideoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StreamingService {
@@ -30,6 +31,19 @@ public class StreamingService {
         this.videoRepository = videoRepository;
         this.userRepository = userRepository;
         this.videoHistoryRepository = videoHistoryRepository;
+    }
+
+    // 비디오 조회
+    public List<VideoInfoResponseDto> getVideos() {
+
+        List<VideoInfoResponseDto> videoInfoResponseDto = new ArrayList<>();
+        List<Video> videos = videoRepository.findAllByOrderByUploadDateAsc();
+
+        for (Video video : videos) {
+            videoInfoResponseDto.add(new VideoInfoResponseDto(video));
+        }
+
+        return videoInfoResponseDto;
     }
 
     // 비디오 등록
