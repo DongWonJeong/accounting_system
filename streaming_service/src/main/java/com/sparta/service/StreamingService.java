@@ -1,6 +1,5 @@
 package com.sparta.service;
 
-import com.sparta.dto.ad.info.AdInfoResponseDto;
 import com.sparta.dto.video.completion.CompletionRequestDto;
 import com.sparta.dto.video.completion.CompletionResponseDto;
 import com.sparta.dto.video.info.VideoInfoResponseDto;
@@ -105,13 +104,19 @@ public class StreamingService {
         // 비디오와 연결된 광고 시청 처리
         List<VideoAd> videoAds = videoAdRepository.findAllByVideoId(video.getId());
 
+        // 중간값 계산
+        double middlePlayTime = video.getTotalPlayTime() / 2.0;
+
         for (VideoAd videoAd : videoAds) {
             Ad ad = videoAd.getAd();
 
-            // 광고 시청 횟수 증가 -> 비디오 소유자가 아닐 경우
-            if (!isVideoOwner) {
-                ad.setAdViews(ad.getAdViews() + 1);
-                adRepository.save(ad);
+            // 현재 시점이 비디오 총 길이의 중간보다 클 경우에만 조회수 증가
+            if (videoHistory.getCurrentPosition() >= middlePlayTime) {
+                // 광고 시청 횟수 증가 -> 비디오 소유자가 아닐 경우
+                if (!isVideoOwner) {
+                    ad.setAdViews(ad.getAdViews() + 1);
+                    adRepository.save(ad);
+                }
             }
         }
 
@@ -129,6 +134,16 @@ public class StreamingService {
 
         Video video = videoRepository.findById(stopRequestDto.getVideoId())
                 .orElseThrow(() -> new IllegalArgumentException("비디오를 찾을 수 없습니다."));
+
+        // 비디오의 총 길이(totalPlayTime) 가져옴
+        long totalPlayTime = video.getTotalPlayTime();
+
+        // 현재 위치(currentPosition) 값 검증
+        long currentPosition = stopRequestDto.getCurrentPosition();
+
+        if (currentPosition > totalPlayTime) {
+            throw new IllegalArgumentException("현재 위치가 비디오 총 길이를 초과했습니다.");
+        }
 
         // 비디오 시청 기록 여부
         VideoHistory videoHistory = videoHistoryRepository.findByUserIdAndVideoId(stopRequestDto.getUserId(), stopRequestDto.getVideoId())
